@@ -1,0 +1,7 @@
+#menu, #menu th {
+	text-align:center;
+}
+
+input[type="text"] {
+	width: 15em;
+}
