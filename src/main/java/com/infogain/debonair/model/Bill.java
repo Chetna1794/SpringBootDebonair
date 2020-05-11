@@ -1,4 +1,4 @@
-package com.infogain.debonair.dto;
+package com.infogain.debonair.model;
 
 import java.time.LocalDateTime;
 

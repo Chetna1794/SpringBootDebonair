@@ -8,9 +8,11 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.infogain.debonair.dto.Bill;
+import com.infogain.debonair.constants.Constants;
+import com.infogain.debonair.dto.CustomerOrderDetails;
 import com.infogain.debonair.dto.Items;
-import com.infogain.debonair.dto.Order;
+import com.infogain.debonair.model.Bill;
+import com.infogain.debonair.model.Order;
 import com.infogain.debonair.repository.Menu;
 
 /**
@@ -22,14 +24,14 @@ import com.infogain.debonair.repository.Menu;
  */
 @Service
 public class RestaurantService {
-
+	Random randomObj = new Random();
 	@Autowired
 	Menu menuRepository;
 
 	/**
 	 * This method is used to get restaurant menu from the Menu repository
 	 * 
-	 * @return static Menu list to showMenu() method of Restaurant controller
+	 * @return Menu list to showMenu() method of Restaurant controller
 	 * 
 	 * @since 21-Apr-2020
 	 */
@@ -42,16 +44,16 @@ public class RestaurantService {
 	 * 
 	 * @since 21-Apr-2020
 	 */
-	public void processOrder(Items items[]) {
+	public Bill processOrder(CustomerOrderDetails customerOrderDetails) {	
 		Order myOrder = new Order();
-		Random randomObj = new Random();
 		// Generating Random Order Id
 		myOrder.setOrderId(randomObj.nextInt(100));
 		// Getting current Date Time
 		myOrder.setOrderDate(LocalDateTime.now());
-		myOrder.setOrderCart(items);
+		myOrder.setOrderCart(customerOrderDetails.getItems());		
 		// initiating bill generation
-		generateBill(myOrder);
+		Bill bill = generateBill(myOrder, getDiscountPercent(customerOrderDetails.getCustomer().getCustomerType()));
+		return bill;
 	}
 
 	/**
@@ -60,18 +62,18 @@ public class RestaurantService {
 	 * @param myOrder
 	 * @since 04-May-2020
 	 */
-	public void generateBill(Order myOrder) {
+	public Bill generateBill(Order myOrder, double discountPercent) {
 		double totalCartPrice = 0.00;
 		Items items[] = myOrder.getOrderCart();
 		for (int i = 0; i < items.length; i++) {
 			totalCartPrice += items[i].getItemRate();
 		}
-		Random randomObj = new Random();
-		// Generating random Bill Id
-		int billNumber = randomObj.nextInt(100);
+		// Applying discount
+		totalCartPrice = totalCartPrice - (totalCartPrice * (discountPercent/100)); 
 		// Generating Bill class's object
-		Bill billObj = new Bill(billNumber, myOrder.getOrderId(), totalCartPrice, myOrder.getOrderDate());
+		Bill billObj = new Bill(randomObj.nextInt(100), myOrder.getOrderId(), totalCartPrice, myOrder.getOrderDate());
 		Order.currentSale.put(myOrder.getOrderId(), billObj);
+		return billObj;
 	}
 
 	/**
@@ -88,5 +90,21 @@ public class RestaurantService {
 		} else {
 			return true;
 		}
+	}
+	
+	/**
+	 * This method returns discount percentage depending on customer type
+	 * 
+	 * @param customerType
+	 * @return
+	 * @since 10-May-2020
+	 */
+	public double getDiscountPercent(String customerType) {
+		if(Constants.CORPORATE.equalsIgnoreCase(customerType)) {
+			return 25.00;
+		} else if(Constants.REGULAR.equalsIgnoreCase(customerType)) {
+			return 15.00;
+		}
+		return 0.00;
 	}
 }

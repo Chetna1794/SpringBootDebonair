@@ -11,8 +11,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -36,10 +34,10 @@
 						<h3>HOME</h3>
 						<p></p>
 					</div>
-					<div id="showMenu" class="tab-pane fade">
+					<div id="showMenu" class="tab-pane fade row">
 						<h3>What you would like to order ?</h3>
-						<div id="menu">
-							<table class="table table-hover">
+						<div id="menu" class="col col-6">
+							<table class="table table-hover menu-table">
 								<thead>
 									<tr>
 										<th><input type="checkbox" id="selectAll"></th>
@@ -51,9 +49,39 @@
 								<tbody id="menuBody">
 								</tbody>
 							</table>
+
 						</div>
-						<button id="placeOrder" class="btn btn-primary">Place
-							Order</button>
+						<div class="customer-form col col-6">
+							<div>
+								<label>Customer ID:</label><input id="customerId" type="number"
+									placeholder="Enter your ID">
+							</div>
+							<div>
+								<label>Customer Name:</label><input id="customerName" type="text"
+									placeholder="Enter your name" required>
+							</div>
+							<div>
+								<label>Customer Date of Birth:</label><input id="customerDateOfBirth" type="date" required>
+							</div>
+							<div>
+								<label>Customer Mobile No:</label><input id="customerNumber" type="number" pattern="^\d{10}$"
+									placeholder="Enter your mobile number" required>
+							</div>
+							<div>
+								<label>Customer Type:</label><select id="customerType" required>
+									<option value="regular">Regular Customer</option>
+									<option value="corporate">Corporate Customer</option>
+								</select>
+							</div>
+							<div>
+								<label>Customer Address:</label><input id="customerAddress" type="text"
+									placeholder="Enter your address" required>
+							</div>
+						</div>
+						<div class="place-order-btn-container">
+							<button id="placeOrder" class="btn btn-primary">Place
+								Order</button>
+						</div>
 					</div>
 					<div id="checkStatus" class="tab-pane fade">
 						<h3>Still waiting for your order ???</h3>
@@ -66,9 +94,11 @@
 					<div id="offers" class="tab-pane fade">
 						<div class="row">
 							<h3>We have amazing offers specially customized for you!!</h3>
-							<p>Enter your Customer ID below to check ongoing offers.</p>
-							<input type="text" placeholder="Enter your Customer ID here"
-								id="customerId" value="">
+							<p>Enter your customer type to check ongoing offers.</p>
+							<select id="customerType1" required>
+								<option value="regular">Regular Customer</option>
+								<option value="corporate">Corporate Customer</option>
+							</select>
 							<button class="btn btn-primary" id="checkOffersBtn">Check
 								Offers</button>
 						</div>

@@ -19,16 +19,6 @@ import com.infogain.debonair.dto.Items;
  */
 @Repository
 public class Menu {
-	private List<Items> ITEM_MENU = new ArrayList<>();
-
-	public List<Items> getITEM_MENU() {
-		return ITEM_MENU;
-	}
-
-	public void setITEM_MENU(List<Items> iTEM_MENU) {
-		ITEM_MENU = iTEM_MENU;
-	}
-
 	/**
 	 * This method is used to fetch menu from Items.txt file
 	 * 
@@ -36,9 +26,7 @@ public class Menu {
 	 * @since 04-May-2020
 	 */
 	public List<Items> fetchMenu() {
-		// fetching items from Items.txt file and saving it in itemMenu
-		// collection(ArrayList)
-		ITEM_MENU.clear();
+		List<Items> ITEM_MENU = new ArrayList<>();
 		try (BufferedReader bufferedReaderObj = new BufferedReader(new FileReader("./src/main/resources/Items.txt"))) {
 			String itemTextObj;
 			// reading each item line by line from bufferedReaderObject

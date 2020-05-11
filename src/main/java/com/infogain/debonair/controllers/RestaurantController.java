@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.infogain.debonair.dto.CustomerOrderDetails;
 import com.infogain.debonair.dto.Items;
-import com.infogain.debonair.service.CustomerService;
+import com.infogain.debonair.model.Bill;
 import com.infogain.debonair.service.RestaurantService;
 
 import io.swagger.annotations.Api;
@@ -34,8 +36,6 @@ public class RestaurantController {
 
 	@Autowired
 	RestaurantService restaurantServices;
-	@Autowired
-	CustomerService customerServices;
 
 	/**
 	 * This method is endpoint to fetch Menu details
@@ -59,9 +59,8 @@ public class RestaurantController {
 	 */
 	@ApiOperation(protocols = "http", notes = "This is used to place customer orders.", value = "Take Order")
 	@PostMapping(path = "/order", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> takeOrder(@RequestBody Items items[]) {
-		restaurantServices.processOrder(items);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+	public ResponseEntity<Bill> takeOrder(@RequestBody CustomerOrderDetails customerOrderDetails) {
+		return new ResponseEntity<Bill>(restaurantServices.processOrder(customerOrderDetails), HttpStatus.CREATED);
 	}
 
 	/**
@@ -71,11 +70,10 @@ public class RestaurantController {
 	 * @return ResponseEntity Object with Status message and HTTP Status OK
 	 * @since 04-May-2020
 	 */
-	@ApiOperation(protocols = "http", notes = "This is used to check order status.", value = "Order Status")
-	@PostMapping(path = "/status", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> checkStatus(@RequestBody String orderId) {
-		System.out.println(orderId);
-		Boolean orderStatus = restaurantServices.checkStatus(Integer.parseInt(orderId));
+	@ApiOperation(protocols = "http", notes = "This is used to check order status.", value = "orderId")
+	@GetMapping(path = "/status", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> checkStatus(@RequestParam String orderId) {
+		boolean orderStatus = restaurantServices.checkStatus(Integer.parseInt(orderId));
 		if (orderStatus) {
 			return new ResponseEntity<String>("Your order is getting ready.", HttpStatus.OK);
 		} else {
@@ -86,15 +84,14 @@ public class RestaurantController {
 	/**
 	 * This method is endpoint to check offers based on type of customer
 	 * 
-	 * @param customerId is provided by the customer
+	 * @param customerType is provided by the customer
 	 * @return ResponseEntity with offers message and HTTP status OK
 	 * @since 04-May-2020
 	 */
-	@ApiOperation(protocols = "http", notes = "This is used to get regular offers.", value = "Customer Offers")
-	@PostMapping(path = "/offers", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getOffers(@RequestBody String customerId) {
-		String value = customerServices.checkCustomerType(customerId);
-		return new ResponseEntity<String>(value, HttpStatus.OK);
+	@ApiOperation(protocols = "http", notes = "This is used to get customer offers.", value = "customerType")
+	@GetMapping(path = "/offers", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Double> getOfferPercent(@RequestParam String customerType) {
+		return new ResponseEntity<Double>(restaurantServices.getDiscountPercent(customerType), HttpStatus.OK);
 	}
 
 }

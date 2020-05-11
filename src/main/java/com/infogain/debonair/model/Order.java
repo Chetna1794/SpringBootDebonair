@@ -1,8 +1,10 @@
-package com.infogain.debonair.dto;
+package com.infogain.debonair.model;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.infogain.debonair.dto.Items;
 
 /**
  * Order class is used to create customer orders
