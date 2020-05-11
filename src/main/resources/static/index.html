@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Debonair Restaurant</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/stylesheet.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col col-12 jumbotron text-center">
+				<h1>Welcome to Debonair</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-12">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+					<li><a data-toggle="tab" href="#showMenu" id="menu">Menu</a></li>
+					<li><a data-toggle="tab" href="#checkStatus" id="status">Check
+							Status</a></li>
+					<li><a data-toggle="tab" href="#offers" id="offer">Offers</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div id="home" class="tab-pane fade in active">
+						<h3>HOME</h3>
+						<p></p>
+					</div>
+					<div id="showMenu" class="tab-pane fade row">
+						<h3>What you would like to order ?</h3>
+						<div id="menu" class="col col-6">
+							<table class="table table-hover menu-table">
+								<thead>
+									<tr>
+										<th><input type="checkbox" id="selectAll"></th>
+										<th>Name</th>
+										<th>Price</th>
+										<th>Preparation Time</th>
+									</tr>
+								</thead>
+								<tbody id="menuBody">
+								</tbody>
+							</table>
+
+						</div>
+						<div class="customer-form col col-6">
+							<div>
+								<label>Customer ID:</label><input id="customerId" type="number"
+									placeholder="Enter your ID">
+							</div>
+							<div>
+								<label>Customer Name:</label><input id="customerName" type="text"
+									placeholder="Enter your name" required>
+							</div>
+							<div>
+								<label>Customer Date of Birth:</label><input id="customerDateOfBirth" type="date" required>
+							</div>
+							<div>
+								<label>Customer Mobile No:</label><input id="customerNumber" type="number" pattern="^\d{10}$"
+									placeholder="Enter your mobile number" required>
+							</div>
+							<div>
+								<label>Customer Type:</label><select id="customerType" required>
+									<option value="regular">Regular Customer</option>
+									<option value="corporate">Corporate Customer</option>
+								</select>
+							</div>
+							<div>
+								<label>Customer Address:</label><input id="customerAddress" type="text"
+									placeholder="Enter your address" required>
+							</div>
+						</div>
+						<div class="place-order-btn-container">
+							<button id="placeOrder" class="btn btn-primary">Place
+								Order</button>
+						</div>
+					</div>
+					<div id="checkStatus" class="tab-pane fade">
+						<h3>Still waiting for your order ???</h3>
+						<p>Enter your Order ID below to check order status</p>
+						<input type="text" placeholder="Enter your Order ID here"
+							id="orderId" value="">
+						<button class="btn btn-primary" id="checkStatusBtn">Check
+							Status</button>
+					</div>
+					<div id="offers" class="tab-pane fade">
+						<div class="row">
+							<h3>We have amazing offers specially customized for you!!</h3>
+							<p>Enter your customer type to check ongoing offers.</p>
+							<select id="customerType1" required>
+								<option value="regular">Regular Customer</option>
+								<option value="corporate">Corporate Customer</option>
+							</select>
+							<button class="btn btn-primary" id="checkOffersBtn">Check
+								Offers</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="./js/main.js"></script>
+</body>
+</html>

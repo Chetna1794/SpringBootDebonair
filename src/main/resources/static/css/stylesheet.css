@@ -1,0 +1,39 @@
+#menu, #menu th {
+	text-align:center;
+}
+
+input[type="text"] {
+	width: 15em;
+}
+
+.menu-table,
+.customer-form {
+	width: 50%;
+}
+
+.customer-form {
+	float: left;
+}
+
+.menu-table {
+	float:right;
+} 
+.place-order-btn-container {
+	text-align: center;
+}
+
+.customer-form div {
+	margin: 1em;
+}
+.customer-form div label {
+	margin-right: 1em;
+}
+
+#selectAll{
+	display: none;
+}
+
+#placeOrder{
+	width: 25em;
+	align-content: center;
+}
